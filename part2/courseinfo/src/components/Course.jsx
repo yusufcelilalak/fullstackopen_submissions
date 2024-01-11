@@ -4,8 +4,8 @@ import Content from "./Content";
 import Total from "./Total";
 
 const Course = ({ course }) => {
-  const total = course.parts.reduce((n, part) => {
-    return n + part.exercises;
+  const total = course.parts.reduce((sum, part) => {
+    return sum + part.exercises;
   }, 0);
 
   return (
