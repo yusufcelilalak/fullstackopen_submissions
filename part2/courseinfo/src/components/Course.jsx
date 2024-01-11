@@ -3,6 +3,7 @@ import Header from "./Header";
 import Content from "./Content";
 import Total from "./Total";
 
+// Course Component is separated
 const Course = ({ course }) => {
   const total = course.parts.reduce((sum, part) => {
     return sum + part.exercises;
