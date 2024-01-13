@@ -13,12 +13,21 @@ const App = () => {
   const addNumber = (e) => {
     e.preventDefault();
 
-    const newPerson = {
-      name: newName
-    }
+    const isPersonExist = persons.find((person)=>person.name === newName);
 
-    setPersons(persons.concat(newPerson));
-    setNewName('');
+    if(isPersonExist)
+    {
+      alert(`${newName} is already added to phonebook`);
+    }
+    else
+    {
+      const newPerson = {
+        name: newName
+      }
+  
+      setPersons(persons.concat(newPerson));
+      setNewName('');
+    }
   }
 
   return (
