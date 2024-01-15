@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import personsService from './services/persons'
 import axios from 'axios';
 
 const App = () => {
@@ -11,13 +12,16 @@ const App = () => {
   const [filterName, setFilterName] = useState('');
 
   useEffect(()=>{
-    axios
-      .get('http://localhost:3001/persons')
+
+    personsService
+      .getAllPersons()
       .then((response)=>{
-        if(response.status === 200){
-          setPersons(response.data);
+        if(response)
+        {
+          setPersons(response);
         }
-      })
+      });
+
   },[]);
 
   const nameHandler = (e) => {
@@ -48,13 +52,15 @@ const App = () => {
         number: newNumber,
       }
   
-      axios
-        .post('http://localhost:3001/persons', newPerson)
+      personsService
+        .addPerson(newPerson)
         .then((response)=>{
-          setPersons(persons.concat(response.data));
-          setNewName('');
-          setNewNumber('');
-        })
+          if(response){
+            setPersons(persons.concat(response));
+            setNewName('');
+            setNewNumber('');
+          }
+        });
     }
   }
 
