@@ -11,7 +11,7 @@ const getAllPersons = () => {
         .catch((error)=>{
             console.log(error);
             alert('An unexpected error occured!');
-        })
+        });
 }
 
 const addPerson = (person) => {
@@ -23,10 +23,23 @@ const addPerson = (person) => {
         .catch((error)=>{
             console.log(error);
             alert('An unexpected error occured!');
+        });
+}
+
+const deletePerson = (id) => {
+    return axios
+        .delete(`${baseUrl}/${id}`)
+        .then((response) => {
+            return response.data;
         })
+        .catch((error)=>{
+            console.log(error);
+            alert('An unexpected error occured!');
+        });
 }
 
 export default {
     getAllPersons,
-    addPerson
+    addPerson,
+    deletePerson
 }

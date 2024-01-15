@@ -64,6 +64,17 @@ const App = () => {
     }
   }
 
+  const deletePersonHandler = (id) => {
+    personsService
+      .deletePerson(id)
+      .then((response)=>{
+        if(response)
+        {
+          setPersons(persons.filter(person => person.id !== response.id));
+        }
+      })
+  }
+
   const filteredPersonList =  persons ? 
     persons.filter((person) => {
       return filterName.length > 0 ? person.name.toLowerCase().startsWith(filterName.toLowerCase()) : true
@@ -80,7 +91,7 @@ const App = () => {
       <PersonForm addNumber={addNumber} newName={newName} nameHandler={nameHandler} newNumber={newNumber} numberHandler={numberHandler}/>
       <h2>Numbers</h2>
       {
-        filteredPersonList.length > 0 && <Persons persons={filteredPersonList}/>
+        filteredPersonList.length > 0 && <Persons deletePersonHandler={deletePersonHandler} persons={filteredPersonList}/>
       }
     </div>
   )
