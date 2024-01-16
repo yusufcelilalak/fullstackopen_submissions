@@ -3,13 +3,14 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personsService from './services/persons'
-import axios from 'axios';
+import SuccessNotification from './components/SuccessNotification';
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filterName, setFilterName] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(()=>{
 
@@ -67,8 +68,13 @@ const App = () => {
         .then((response)=>{
           if(response){
             setPersons(persons.concat(response));
+            setSuccessMessage(`Added ${response.name}`);
             setNewName('');
             setNewNumber('');
+
+            setTimeout(()=>{
+              setSuccessMessage(null);
+            },3000);
           }
         });
     }
@@ -96,6 +102,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {
+        successMessage && <SuccessNotification message={successMessage}/>
+      }
       <Filter filterName={filterName} filterHandler={filterHandler}/>
       <h2>add a new</h2>
       <PersonForm addNumber={addNumber} newName={newName} nameHandler={nameHandler} newNumber={newNumber} numberHandler={numberHandler}/>

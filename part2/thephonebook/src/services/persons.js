@@ -6,7 +6,10 @@ const getAllPersons = () => {
     return axios
         .get(baseUrl)
         .then((response) => {
-            return response.data;
+            if(response.status.toString().startsWith('2'))
+                return response.data;
+            else
+                return null;
         })
         .catch((error)=>{
             console.log(error);
@@ -18,7 +21,10 @@ const addPerson = (person) => {
     return axios
         .post(baseUrl, person)
         .then((response) => {
-            return response.data;
+            if(response.status.toString().startsWith('2'))
+                return response.data;
+            else
+                return null;
         })
         .catch((error)=>{
             console.log(error);
@@ -30,7 +36,10 @@ const deletePerson = (id) => {
     return axios
         .delete(`${baseUrl}/${id}`)
         .then((response) => {
-            return response.data;
+            if(response.status.toString().startsWith('2'))
+                return response.data;
+            else
+                return null;
         })
         .catch((error)=>{
             console.log(error);
@@ -42,7 +51,10 @@ const updatePerson = (id, updatedData) => {
     return axios
         .put(`${baseUrl}/${id}`,updatedData)
         .then((response) => {
-            return response.data;
+            if(response.status.toString().startsWith('2'))
+                return response.data;
+            else
+                return null;
         })
         .catch((error)=>{
             console.log(error);
