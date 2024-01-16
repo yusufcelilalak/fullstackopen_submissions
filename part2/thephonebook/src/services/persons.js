@@ -13,7 +13,7 @@ const getAllPersons = () => {
         })
         .catch((error)=>{
             console.log(error);
-            alert('An unexpected error occured!');
+            return false;
         });
 }
 
@@ -28,7 +28,7 @@ const addPerson = (person) => {
         })
         .catch((error)=>{
             console.log(error);
-            alert('An unexpected error occured!');
+            return false;
         });
 }
 
@@ -43,7 +43,7 @@ const deletePerson = (id) => {
         })
         .catch((error)=>{
             console.log(error);
-            alert('An unexpected error occured!');
+            return false;
         });
 }
 
@@ -58,7 +58,7 @@ const updatePerson = (id, updatedData) => {
         })
         .catch((error)=>{
             console.log(error);
-            alert('An unexpected error occured!');
+            return false;
         });
 }
 
