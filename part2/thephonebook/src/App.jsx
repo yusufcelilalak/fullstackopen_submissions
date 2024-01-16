@@ -39,11 +39,21 @@ const App = () => {
   const addNumber = (e) => {
     e.preventDefault();
 
-    const isPersonExist = persons.find((person)=>person.name === newName);
+    const existedPerson = persons.find((person)=>person.name === newName);
 
-    if(isPersonExist)
+    if(existedPerson)
     {
-      alert(`${newName} is already added to phonebook`);
+      if(confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const updatedData = {...existedPerson, number: newNumber}
+
+        personsService
+          .updatePerson(existedPerson.id, updatedData)
+          .then((response)=>{
+            setPersons(persons.map(person => person.id === response.id ? {...person, number: newNumber} : person ));
+            setNewName('');
+            setNewNumber('');
+          })
+      }
     }
     else
     {

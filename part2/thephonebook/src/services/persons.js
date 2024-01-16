@@ -38,8 +38,22 @@ const deletePerson = (id) => {
         });
 }
 
+const updatePerson = (id, updatedData) => {
+    return axios
+        .put(`${baseUrl}/${id}`,updatedData)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error)=>{
+            console.log(error);
+            alert('An unexpected error occured!');
+        });
+}
+
+
 export default {
     getAllPersons,
     addPerson,
-    deletePerson
+    deletePerson,
+    updatePerson
 }
