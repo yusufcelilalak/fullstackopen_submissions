@@ -20,6 +20,9 @@ function App() {
       })
   },[]);
 
+  const filteredCountries = countries.filter(countryItem => countryItem.name.common.toLowerCase().includes(filterCountry.toLowerCase()));
+  const firstCountry = filteredCountries.length === 1 ? filteredCountries[0] : '';
+
   const changeCountryNameHandler = (e) => {
     setShowCountry(null);
     setFilterCountry(e.target.value);
@@ -28,8 +31,6 @@ function App() {
   const showCountryHandler = (country) => {
     setShowCountry(country);
   }
-  const filteredCountries = countries.filter(countryItem => countryItem.name.common.toLowerCase().includes(filterCountry.toLowerCase()));
-  const firstCountry = filteredCountries.length === 1 ? filteredCountries[0] : '';
 
   return (
     <>
@@ -51,7 +52,7 @@ function App() {
                   })
                 }
                 {
-                  showCountry && <CountryInfo country={showCountry} />
+                  showCountry && <CountryInfo country={showCountry}/>
                 }
                
               </div>
