@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import countryService from './services/countryService';
+import CountryInfo from './components/CountryInfo';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [filterCountry, setFilterCountry] = useState('');
+  const [showCountry, setShowCountry] = useState(null);
 
   useEffect(()=>{
     countryService
@@ -19,9 +21,13 @@ function App() {
   },[]);
 
   const changeCountryNameHandler = (e) => {
+    setShowCountry(null);
     setFilterCountry(e.target.value);
   }
 
+  const showCountryHandler = (country) => {
+    setShowCountry(country);
+  }
   const filteredCountries = countries.filter(countryItem => countryItem.name.common.toLowerCase().includes(filterCountry.toLowerCase()));
   const firstCountry = filteredCountries.length === 1 ? filteredCountries[0] : '';
 
@@ -38,26 +44,19 @@ function App() {
             <div>Too many matches, specify another filter</div>
             :
             filteredCountries.length !== 1 ?
-              filteredCountries.map((country)=>{
-                return <div key={country.cca2+country.cca3}>{country.name.common}</div>
-              })
-              :
               <div>
-                <h2>{firstCountry.name.common}</h2>
-                <div>capital {firstCountry.capital[0]}</div>
-                <div>area {firstCountry.area}</div>
-                <h4>languages:</h4>
-                <ul>
-                  {
-                    Object.keys(firstCountry.languages).map((langCode)=>{
-                      return <li key={langCode}>{firstCountry.languages[langCode]}</li>
-                    })
-                  }
-                </ul>
-                <div className='flag'>
-                  <img src={firstCountry.flags.png} alt={firstCountry.flags.alt}/>
-                </div>
+                {
+                  filteredCountries.map((country)=>{
+                    return <div key={country.cca2+country.cca3}>{country.name.common} <button onClick={()=>{showCountryHandler(country)}}>show</button></div>
+                  })
+                }
+                {
+                  showCountry && <CountryInfo country={showCountry} />
+                }
+               
               </div>
+              :
+              <CountryInfo country={firstCountry}/>
       }
     </>
   )
